@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>۲۰ پرسش پایهٔ HTML — پرسش‌های پرتکرار با پاسخ کوتاه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@300;400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f1e8;
+  --paper-2:#fffdf7;
+  --ink:#1d1712;
+  --ink-2:#3b322a;
+  --muted:#7d7266;
+  --line:#e4d8c6;
+  --accent:#cf3f22;
+  --accent-2:#a32c12;
+  --teal:#0f6b5f;
+  --gold:#b8862b;
+  --dark:#221c16;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  font-size:16.5px;
+  line-height:2.05;
+  -webkit-font-smoothing:antialiased;
+}
+/* بافت ظریف */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.page{
+  max-width:900px;
+  margin:0 auto;
+  padding:clamp(26px,5vw,64px) clamp(16px,4vw,32px) 80px;
+}
+
+/* ---------- سربرگ ---------- */
+.head{
+  position:relative;overflow:hidden;
+  background:var(--dark);color:#f4ece0;
+  border-radius:22px;
+  padding:clamp(28px,5vw,48px);
+  margin-bottom:14px;
+  box-shadow:0 22px 50px -32px rgba(40,22,10,.7);
+}
+.head::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(45deg,rgba(207,63,34,.14) 0 2px,transparent 2px 28px),
+    repeating-linear-gradient(-45deg,rgba(207,63,34,.14) 0 2px,transparent 2px 28px);
+}
+.head::after{
+  content:"";position:absolute;width:320px;height:320px;border-radius:50%;
+  border:1.5px dashed rgba(207,63,34,.45);left:-140px;bottom:-190px;
+}
+.head > *{position:relative;z-index:2}
+.kicker{
+  display:inline-block;font-size:.76rem;letter-spacing:2.5px;font-weight:700;
+  color:#f0a28c;border:1px solid rgba(240,162,140,.45);
+  padding:.32em 1.05em;border-radius:999px;margin-bottom:18px;
+}
+.head h1{
+  font-family:'Lalezar',cursive;font-weight:400;
+  font-size:clamp(2rem,5.4vw,3.35rem);line-height:1.4;margin:0 0 .3em;
+}
+.head h1 .hl{color:transparent;-webkit-text-stroke:1.5px var(--accent)}
+.head p{margin:0;color:#d5c6b2;max-width:60ch;font-weight:300}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.stat{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.13);
+  border-radius:12px;padding:10px 18px;font-size:.82rem;color:#c0ae99;
+}
+.stat b{
+  font-family:'Lalezar',cursive;font-size:1.45rem;color:#fff;font-weight:400;
+  margin-inline-end:8px;
+}
+
+/* ---------- نوار ابزار ---------- */
+.bar{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  margin:20px 0 26px;
+}
+.bar .hint{font-size:.84rem;color:var(--muted);margin-inline-end:auto}
+.btn{
+  display:inline-flex;align-items:center;gap:.5em;
+  border:0;border-radius:999px;padding:.68em 1.45em;
+  font-family:inherit;font-size:.88rem;font-weight:700;cursor:pointer;
+  transition:background .22s ease,transform .22s ease,letter-spacing .3s ease;
+}
+.btn:hover{transform:translateY(-2px);letter-spacing:.04em}
+.btn-dark{background:var(--ink);color:#f4e9d9}
+.btn-dark:hover{background:#000}
+.btn-ghost{background:transparent;color:var(--ink);border:1.6px solid var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+.btn-accent{background:var(--accent);color:#fff;box-shadow:0 12px 22px -16px rgba(207,63,34,.9)}
+.btn-accent:hover{background:var(--accent-2)}
+
+/* ---------- آکاردئون پرسش‌ها ---------- */
+.faq{display:grid;gap:12px}
+details{
+  background:var(--paper-2);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 10px 26px -24px rgba(40,22,10,.6);
+  transition:border-color .28s ease,box-shadow .28s ease;
+}
+details:hover{border-color:#d6c3a8}
+details[open]{
+  border-color:var(--accent);
+  box-shadow:0 20px 38px -26px rgba(207,63,34,.55);
+}
+summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:flex-start;gap:14px;
+  padding:18px 20px;
+  font-weight:800;font-size:1.02rem;line-height:2;
+  transition:background .25s ease,color .25s ease;
+}
+summary::-webkit-details-marker{display:none}
+summary:hover{background:#fbf3e7}
+details[open] summary{background:#fbeee4;color:var(--accent-2)}
+.q-no{
+  flex:0 0 auto;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:38px;height:38px;padding:0 6px;
+  border-radius:11px;
+  background:var(--ink);color:#f2e5d2;
+  font-family:'IBM Plex Mono',monospace;font-size:.85rem;font-weight:600;
+  margin-top:.15em;
+}
+details[open] .q-no{background:var(--accent);color:#fff}
+.q-text{flex:1}
+summary .sign{
+  flex:0 0 auto;margin-top:.15em;
+  width:32px;height:32px;border-radius:50%;
+  border:1.6px solid var(--line);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-size:1.05rem;font-weight:600;
+  color:var(--muted);line-height:1;
+  transition:transform .3s ease,background .3s ease,color .3s ease,border-color .3s ease;
+}
+summary .sign::before{content:"+"}
+details[open] summary .sign{
+  background:var(--accent);border-color:var(--accent);color:#fff;
+  transform:rotate(180deg);
+}
+details[open] summary .sign::before{content:"−"}
+
+.answer{
+  padding:2px 22px 22px 22px;
+  border-top:1.5px dashed var(--line);
+  margin:0 20px 4px;
+}
+.answer p{margin:16px 0 0;color:var(--ink-2);font-size:.965rem}
+.answer p + p{margin-top:.7em}
+.answer b{font-weight:900;color:var(--ink)}
+code{
+  direction:ltr;unicode-bidi:isolate;
+  font-family:'IBM Plex Mono',monospace;font-size:.83em;
+  background:#efe6d8;border:1px solid var(--line);
+  border-radius:7px;padding:.12em .5em;color:#a8402a;white-space:nowrap;
+}
+.answer .tip{
+  margin-top:14px;padding:13px 17px;border-radius:11px;
+  background:#e9f4f1;border-inline-start:5px solid var(--teal);
+  font-size:.9rem;color:#24524b;
+}
+.answer .warn{
+  margin-top:14px;padding:13px 17px;border-radius:11px;
+  background:#fcece6;border-inline-start:5px solid var(--accent);
+  font-size:.9rem;color:#7c2c17;
+}
+
+/* ---------- پاورقی ---------- */
+.footer{
+  margin-top:44px;padding-top:22px;border-top:1.5px dashed var(--line);
+  text-align:center;color:var(--muted);font-size:.85rem;
+}
+.footer a{color:var(--accent-2);font-weight:700;text-decoration:none}
+
+/* ---------- واکنش‌گرا ---------- */
+@media (max-width:560px){
+  summary{flex-wrap:wrap;font-size:.96rem}
+  summary .sign{margin-inline-start:auto}
+  .answer{margin-inline:12px;padding-inline:6px}
+}
+
+/* ---------- چاپ ---------- */
+@media print{
+  @page{margin:15mm}
+  body{background:#fff;font-size:11pt}
+  body::before{display:none}
+  .head{background:#fff;color:#000;border:2px solid #000;box-shadow:none}
+  .head::before,.head::after{display:none}
+  .head h1{color:#000;font-size:22pt}
+  .head h1 .hl{color:#000;-webkit-text-stroke:0}
+  .head p{color:#222}
+  .kicker{color:#000;border-color:#000}
+  .stat{border:1px solid #999;color:#000}
+  .stat b{color:#000}
+  .bar{display:none}
+  details{page-break-inside:avoid;box-shadow:none;border:1px solid #888}
+  details{border-inline-start-width:3px;border-inline-start-color:#000}
+  summary{color:#000;background:#fff}
+  .q-no{background:#000;color:#fff}
+  .sign{border-color:#777;color:#000}
+  .answer{border-top-color:#999}
+  .answer p{color:#111}
+  .footer{color:#000}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- سربرگ -->
+  <header class="head">
+    <span class="kicker">پرسش‌های پرتکرار · فصل اول</span>
+    <h1>۲۰ پرسش پایهٔ <span class="hl">HTML</span> با پاسخ کوتاه</h1>
+    <p>
+      مرور سریع مفاهیم بنیادی HTML5: از ساختار سند و سی تگ پرکاربرد تا فرم، جدول،
+      تگ‌های معنایی و نکته‌های راست‌به‌چپ. روی هر پرسش کلیک کن تا پاسخ را ببینی.
+    </p>
+    <div class="stats">
+      <div class="stat"><b>۲۰</b> پرسش</div>
+      <div class="stat"><b>۱۰۰٪</b> پاسخ کوتاه و کاربردی</div>
+      <div class="stat"><b>۰</b> نیاز به پیش‌نیاز</div>
+    </div>
+  </header>
+
+  <!-- نوار ابزار -->
+  <div class="bar">
+    <span class="hint">راهنما: با دکمه‌های کنار می‌توانی همهٔ پاسخ‌ها را یک‌جا باز یا بسته کنی.</span>
+    <button class="btn btn-dark" type="button" id="openAll">باز کردن همه</button>
+    <button class="btn btn-ghost" type="button" id="closeAll">بستن همه</button>
+    <button class="btn btn-accent" type="button" onclick="window.print()">چاپ / PDF</button>
+  </div>
+
+  <!-- پرسش‌ها -->
+  <main class="faq" id="faq">
+
+    <details>
+      <summary>
+        <span class="q-no">۰۱</span>
+        <span class="q-text">HTML چیست و چه نقشی در وب دارد؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          HTML مخفف <b>HyperText Markup Language</b> (زبان نشانه‌گذاری ابرمتن) است.
+          با این زبان، «ساختار و محتوای» صفحه تعریف می‌شود: عنوان، پاراگراف، تصویر، لینک، جدول و فرم.
+          مرورگر این نشانه‌ها را می‌خواند و آن‌ها را به صفحه‌ای قابل‌مشاهده تبدیل می‌کند.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۰۲</span>
+        <span class="q-text">تفاوت HTML، CSS و JavaScript چیست؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <b>HTML</b> ساختار و محتوا، <b>CSS</b> ظاهر و چیدمان، و <b>JavaScript</b> رفتار و تعامل را می‌سازد.
+          اگر صفحه را یک انسان در نظر بگیریم: HTML اسکلت است، CSS لباس، و JavaScript حرکت و حرف‌زدن.
+        </p>
+        <div class="tip">ترتیب درست یادگیری و ساخت پروژه: اول HTML معنادار، بعد CSS، و در آخر JavaScript.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۰۳</span>
+        <span class="q-text">اسکلت پایهٔ یک سند HTML5 چیست؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          هر سند با اعلان نوع سند شروع می‌شود، سپس تگ <code dir="ltr">&lt;html&gt;</code> که دو بخش دارد:
+          <code dir="ltr">&lt;head&gt;</code> برای اطلاعات سند و <code dir="ltr">&lt;body&gt;</code> برای محتوای قابل‌مشاهده.
+        </p>
+        <p>
+          حداقل کد: <code dir="ltr">&lt;!DOCTYPE html&gt;</code> + <code dir="ltr">&lt;html lang="fa" dir="rtl"&gt;</code>
+          شامل <code dir="ltr">&lt;head&gt;</code> با <code dir="ltr">&lt;title&gt;</code> و <code dir="ltr">&lt;body&gt;</code> با متن.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۰۴</span>
+        <span class="q-text">تگ &lt;!DOCTYPE html&gt; چه کاری انجام می‌دهد؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          نوع سند را به مرورگر اعلام می‌کند و باعث می‌شود صفحه در <b>حالت استاندارد</b> رندر شود.
+          بدون آن، ممکن است مرورگر وارد «حالت سازگاری قدیمی» شود و نمایش صفحه در مرورگرهای مختلف به‌هم بخورد.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۰۵</span>
+        <span class="q-text">تفاوت &lt;head&gt; و &lt;body&gt; چیست؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <code dir="ltr">&lt;head&gt;</code> اطلاعات «دربارهٔ صفحه» را نگه می‌دارد: عنوان سند، متادیتا، لینک فایل CSS و اسکریپت‌ها —
+          یعنی چیزهایی که کاربر مستقیم در صفحه نمی‌بیند.
+        </p>
+        <p>
+          <code dir="ltr">&lt;body&gt;</code> هر چیزی است که در پنجرهٔ مرورگر دیده می‌شود: متن، تصویر، دکمه و فرم.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۰۶</span>
+        <span class="q-text">&lt;title&gt; و متا تگ‌ها چه نقشی دارند؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          متن <code dir="ltr">&lt;title&gt;</code> در <b>تب مرورگر</b> و در نتایج جست‌وجو نمایش داده می‌شود و یکی از مهم‌ترین عناصر سئو است.
+        </p>
+        <p>
+          از متا تگ‌ها: <code dir="ltr">charset="UTF-8"</code> نویسه‌های فارسی را درست نشان می‌دهد،
+          <code dir="ltr">name="viewport"</code> نمایش در موبایل را تنظیم می‌کند و
+          <code dir="ltr">name="description"</code> توضیح کوتاه نتیجهٔ جست‌وجو را تعیین می‌کند.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۰۷</span>
+        <span class="q-text">تگ، ویژگی و متن چیست؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          در نمونهٔ <code dir="ltr">&lt;a href="about.html"&gt;درباره ما&lt;/a&gt;</code>:
+          نام <code dir="ltr">a</code> تگ، <code dir="ltr">href="about.html"</code> ویژگی (با مقدارش)
+          و «درباره ما» متنِ میان تگِ باز و تگِ بسته است.
+        </p>
+        <p>ویژگی‌ها همیشه داخل تگِ باز و به شکل <code dir="ltr">نام="مقدار"</code> نوشته می‌شوند.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۰۸</span>
+        <span class="q-text">تفاوت &lt;div&gt; و &lt;span&gt; چیست؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <code dir="ltr">&lt;div&gt;</code> یک ظرف <b>بلوکی</b> است (سطر جدید می‌گیرد) و برای چیدمان و گروه‌بندی بخش‌های صفحه به کار می‌رود.
+          <code dir="ltr">&lt;span&gt;</code> <b>درون‌خطی</b> است و فقط بخش کوچکی از متن را در بر می‌گیرد (مثلاً برای رنگ‌دادن به یک کلمه).
+        </p>
+        <div class="warn">هر دو «بی‌معنا» هستند؛ هر وقت تگ معنایی بهتری وجود داشت (مثل <code dir="ltr">nav</code> یا <code dir="ltr">strong</code>) همان را انتخاب کن.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۰۹</span>
+        <span class="q-text">سلسله‌مراتب عنوان‌ها h1 تا h6 چگونه است؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <code dir="ltr">&lt;h1&gt;</code> مهم‌ترین عنوان صفحه (معمولاً فقط یکی) و <code dir="ltr">&lt;h6&gt;</code> کم‌اهمیت‌ترین است.
+        </p>
+        <p>
+          سطح‌ها را بدون پرش انتخاب کن (h1 ← h2 ← h3)؛ این ساختار هم برای خوانایی انسان و هم برای
+          موتورهای جست‌وجو و صفحه‌خوان‌های نابینایان حیاتی است.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۱۰</span>
+        <span class="q-text">لینک چگونه ساخته می‌شود؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          با تگ <code dir="ltr">&lt;a&gt;</code> و ویژگی <code dir="ltr">href</code>:
+          <code dir="ltr">&lt;a href="page.html"&gt;متن&lt;/a&gt;</code>
+        </p>
+        <p>
+          <code dir="ltr">target="_blank"</code> لینک را در تب جدید باز می‌کند (همراه با
+          <code dir="ltr">rel="noopener"</code> امن‌تر است)، <code dir="ltr">mailto:</code> ایمیل باز می‌کند
+          و <code dir="ltr">#id</code> برای پرش به بخشی از همان صفحه است.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۱۱</span>
+        <span class="q-text">ویژگی alt در تصویر چیست و چرا مهم است؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <code dir="ltr">alt</code> متن جایگزین تصویر است و برای <b>نابینایان</b> (صفحه‌خوان)،
+          موتورهای جست‌وجو و زمانی که تصویر بارگذاری نمی‌شود خوانده می‌شود.
+        </p>
+        <p>
+          تصویر صرفاً تزئینی را با <code dir="ltr">alt=""</code> علامت‌گذاری کن و همیشه
+          <code dir="ltr">width</code> و <code dir="ltr">height</code> بده تا صفحه هنگام بارگذاری نپرد.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۱۲</span>
+        <span class="q-text">تفاوت &lt;ul&gt;، &lt;ol&gt; و &lt;li&gt; چیست؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <code dir="ltr">&lt;ul&gt;</code> لیست بدون ترتیب (بولت‌دار) و <code dir="ltr">&lt;ol&gt;</code> لیست شماره‌دار می‌سازد.
+          هر آیتم در هر دو با <code dir="ltr">&lt;li&gt;</code> نوشته می‌شود و لیست‌ها می‌توانند تودرتو شوند.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۱۳</span>
+        <span class="q-text">ساختار استاندارد جدول چیست؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <code dir="ltr">&lt;table&gt;</code> شامل <code dir="ltr">&lt;thead&gt;</code> (سرستون‌ها با
+          <code dir="ltr">&lt;th&gt;</code>)، <code dir="ltr">&lt;tbody&gt;</code> (داده‌ها با
+          <code dir="ltr">&lt;td&gt;</code>) و هر ردیف با <code dir="ltr">&lt;tr&gt;</code>.
+          برای عنوان جدول <code dir="ltr">&lt;caption&gt;</code> و برای دسترس‌پذیری <code dir="ltr">scope="col"</code> روی thها خوب است.
+        </p>
+        <div class="warn">جدول فقط برای «دادهٔ جدولی» است، نه برای چیدمان صفحه. چیدمان با Flexbox و Grid انجام می‌شود.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۱۴</span>
+        <span class="q-text">تگ &lt;form&gt; چه می‌کند؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          فرم، ظرف فیلدهای ورودی است و مشخص می‌کند داده «کجا» ارسال شود (<code dir="ltr">action</code>)
+          و «چگونه» ارسال شود (<code dir="ltr">method</code> مثل <code dir="ltr">get</code> یا <code dir="ltr">post</code>).
+          دکمهٔ <code dir="ltr">type="submit"</code> فرم را ارسال می‌کند.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۱۵</span>
+        <span class="q-text">پرکاربردترین نوع‌های &lt;input&gt; کدام‌اند؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <code dir="ltr">text</code>، <code dir="ltr">email</code>، <code dir="ltr">password</code>،
+          <code dir="ltr">number</code>، <code dir="ltr">date</code>، <code dir="ltr">checkbox</code>،
+          <code dir="ltr">radio</code>، <code dir="ltr">file</code> و <code dir="ltr">range</code>.
+        </p>
+        <p>
+          انتخاب نوعِ درست باعث می‌شود مرورگر هم کیبورد مناسب موبایل نشان دهد و هم فرمت ورودی را بررسی کند.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۱۶</span>
+        <span class="q-text">چرا هر ورودی باید &lt;label&gt; داشته باشد؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <code dir="ltr">&lt;label&gt;</code> با ویژگی <code dir="ltr">for</code> (برابر با
+          <code dir="ltr">id</code> فیلد) به آن وصل می‌شود. نتیجه: کلیک روی برچسب، فیلد را فعال می‌کند
+          و صفحه‌خوان‌ها می‌فهمند هر فیلد برای چیست.
+        </p>
+        <div class="tip">این ساده‌ترین قدم برای «دسترس‌پذیری» فرم‌هاست و تجربهٔ کاربر را هم بهتر می‌کند.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۱۷</span>
+        <span class="q-text">اعتبارسنجی داخلی مرورگر چیست؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          ویژگی‌هایی مثل <code dir="ltr">required</code>، <code dir="ltr">minlength</code> /
+          <code dir="ltr">maxlength</code>، <code dir="ltr">min</code> / <code dir="ltr">max</code>،
+          <code dir="ltr">pattern</code> و <code dir="ltr">placeholder</code> بدون حتی یک خط JavaScript
+          ورودی را بررسی می‌کنند.
+        </p>
+        <div class="warn">با این حال، در پروژه‌های واقعی اعتبارسنجی «سمت سرور» را همیشه انجام بده؛ هیچ‌وقت فقط به مرورگر اکتفا نکن.</div>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۱۸</span>
+        <span class="q-text">تگ‌های معنایی کدام‌اند و چرا مهم‌اند؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <code dir="ltr">&lt;header&gt;</code>، <code dir="ltr">&lt;nav&gt;</code>،
+          <code dir="ltr">&lt;main&gt;</code>، <code dir="ltr">&lt;article&gt;</code>،
+          <code dir="ltr">&lt;section&gt;</code>، <code dir="ltr">&lt;aside&gt;</code> و
+          <code dir="ltr">&lt;footer&gt;</code> نقش هر بخش را به مرورگر و موتور جست‌وجو می‌گویند.
+        </p>
+        <p>
+          مزایا: کد خواناتر، سئوی بهتر، و تجربهٔ بسیار بهتر برای کاربران نابینا — در مقایسه با
+          <code dir="ltr">&lt;div&gt;</code> بی‌معنا.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۱۹</span>
+        <span class="q-text">تگ‌های متنی و چندرسانه‌ای پرکاربرد کدام‌اند؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          برای متن: <code dir="ltr">&lt;strong&gt;</code> و <code dir="ltr">&lt;em&gt;</code> (تأکید)،
+          <code dir="ltr">&lt;br&gt;</code> (شکستن خط)، <code dir="ltr">&lt;hr&gt;</code> (جداکننده)،
+          <code dir="ltr">&lt;blockquote&gt;</code> (نقل‌قول)، <code dir="ltr">&lt;pre&gt;</code> و
+          <code dir="ltr">&lt;code&gt;</code> (کد).
+        </p>
+        <p>
+          برای رسانه: <code dir="ltr">&lt;video&gt;</code> و <code dir="ltr">&lt;audio&gt;</code> (با ویژگی
+          <code dir="ltr">controls</code>)، <code dir="ltr">&lt;iframe&gt;</code> (صفحهٔ توکار) و
+          <code dir="ltr">&lt;details&gt;</code>/<code dir="ltr">&lt;summary&gt;</code> برای بخش جمع‌شونده بدون جاوااسکریپت.
+        </p>
+      </div>
+    </details>
+
+    <details>
+      <summary>
+        <span class="q-no">۲۰</span>
+        <span class="q-text">در سند فارسی نقش lang و dir چیست و متن‌های دوجهته چگونه درست نمایش داده می‌شوند؟</span>
+        <span class="sign" aria-hidden="true"></span>
+      </summary>
+      <div class="answer">
+        <p>
+          <code dir="ltr">lang="fa"</code> زبان سند و <code dir="ltr">dir="rtl"</code> جهت نوشتن (راست‌به‌چپ) را مشخص می‌کند.
+          این دو برای دسترس‌پذیری، سئو و نمایش درست فارسی ضروری‌اند.
+        </p>
+        <p>
+          وقتی در میان جملهٔ فارسی متن لاتین یا عدد داری (مثل <code dir="ltr">&lt;/div&gt;</code> یا
+          <code dir="ltr">width: 100%</code>) ممکن است ترتیب نمادها به‌هم بخورد. راه‌حل:
+          آن بخش را با <code dir="ltr">dir="ltr"</code> مشخص کن یا در تگ
+          <code dir="ltr">&lt;bdi&gt;</code> بپیچ تا از متن فارسی «ایزوله» شود.
+        </p>
+      </div>
+    </details>
+
+  </main>
+
+  <footer class="footer">
+    <div>مجموعهٔ پرسش‌های پایهٔ HTML5 · مناسب مرور پیش از آزمون</div>
+    <div style="margin-top:6px">
+      نکته: می‌توانی این بخش را در انتهای «فصل اول» فایل دوره جای‌گذاری کنی
+      یا با دکمهٔ چاپ، نسخهٔ PDF آن را داشته باشی.
+    </div>
+  </footer>
+
+</div>
+
+<script>
+// باز/بسته کردن همهٔ پرسش‌ها
+document.getElementById('openAll').addEventListener('click', () => {
+  document.querySelectorAll('#faq details').forEach(d => d.open = true);
+});
+document.getElementById('closeAll').addEventListener('click', () => {
+  document.querySelectorAll('#faq details').forEach(d => d.open = false);
+});
+// پیش از چاپ، همهٔ پاسخ‌ها باز شوند
+window.addEventListener('beforeprint', () => {
+  document.querySelectorAll('#faq details').forEach(d => d.open = true);
+});
+</script>
+
+</body>
+</html>
